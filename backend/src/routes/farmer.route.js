@@ -2,6 +2,7 @@ import express from "express";
 import {
   getAllFarmers,
   getFarmerById,
+  getCurrentFarmer,
   updateFarmerAccountDetails,
   updateFarmerProfileImage,
   updateFarmerCoverImage,
@@ -14,6 +15,7 @@ const router = express.Router();
 
 router.route("/get-all-farmers").get(verifyToken, getAllFarmers);
 router.route("/get-farmer-by-id/:id").get(verifyToken, getFarmerById);
+router.route("/current-farmer").get(verifyToken, getCurrentFarmer);
 router
   .route("/update-farmer-account-details")
   .put(verifyToken, updateFarmerAccountDetails);

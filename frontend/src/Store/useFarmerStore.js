@@ -6,7 +6,7 @@ export const useFarmerStore = create((set) => ({
   currUser: async () => {
     try {
       const response = await axiosInstance.get("/farmer/current-farmer");
-      set({ currUser: response.data });
+      set({ currUser: response.data?.data?.farmer });
     } catch (error) {
       console.error("Error fetching user profile:", error);
       toast.error("Failed to fetch user profile.");
@@ -18,7 +18,7 @@ export const useFarmerStore = create((set) => ({
       const response = await axiosInstance.get(
         `/farmer/get-farmer-by-id/${id}`
       );
-      return response.data.message.farmer;
+      return response.data.data.farmer;
     } catch (error) {
       toast.error(
         error.response?.data?.message || "An unexpected error occurred."
@@ -33,7 +33,7 @@ export const useFarmerStore = create((set) => ({
         "/farmer/update-farmer-account-details",
         data
       );
-      set({ currUser: response.data });
+      set({ currUser: response.data?.data });
       toast.success("Profile updated successfully!");
     } catch (error) {
       toast.error(error.response.data.message);
@@ -51,7 +51,7 @@ export const useFarmerStore = create((set) => ({
           },
         }
       );
-      set({ currUser: response.data });
+      set({ currUser: response.data?.data });
       toast.success("Profile image updated successfully!");
     } catch (error) {
       toast.error(error.response.data.message);
@@ -69,7 +69,7 @@ export const useFarmerStore = create((set) => ({
           },
         }
       );
-      set({ currUser: response.data });
+      set({ currUser: response.data?.data });
       toast.success("Cover image updated successfully!");
     } catch (error) {
       toast.error(error.response.data.message);
@@ -82,7 +82,7 @@ export const useFarmerStore = create((set) => ({
         "/farmer/update-farmer-password",
         data
       );
-      set({ currUser: response.data });
+      set({ currUser: response.data?.data });
       toast.success("Password updated successfully!");
     } catch (error) {
       toast.error(error.response.data.message);

@@ -20,7 +20,7 @@ const createAudit = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, "Audit created successfully.", { audit }));
+    .json(new ApiResponse(200, { audit }, "Audit created successfully."));
 });
 
 const getAuditById = asyncHandler(async (req, res) => {
@@ -36,7 +36,7 @@ const getAuditById = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Audit not found.");
   }
 
-  return res.status(200).json(new ApiResponse(200, "Audit found.", { audit }));
+  return res.status(200).json(new ApiResponse(200, { audit }, "Audit found."));
 });
 
 const getAuditByProductId = asyncHandler(async (req, res) => {
@@ -52,7 +52,7 @@ const getAuditByProductId = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Audit not found.");
   }
 
-  return res.status(200).json(new ApiResponse(200, "Audit found.", { audit }));
+  return res.status(200).json(new ApiResponse(200, { audit }, "Audit found."));
 });
 
 const updateAudit = asyncHandler(async (req, res) => {
@@ -84,7 +84,7 @@ const updateAudit = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, "Audit updated successfully.", { audit }));
+    .json(new ApiResponse(200, { audit }, "Audit updated successfully."));
 });
 
 const deleteAudit = asyncHandler(async (req, res) => {
@@ -102,7 +102,7 @@ const deleteAudit = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, "Audit deleted successfully.", { audit }));
+    .json(new ApiResponse(200, { audit }, "Audit deleted successfully."));
 });
 
 export {

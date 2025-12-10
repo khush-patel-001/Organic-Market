@@ -6,28 +6,29 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    const { login, isLoggingIn, authUser, register, isSigningUp, logout} = useAuthStore();
+    const { login, authUser, register, logout, checkAuth } = useAuthStore();
     
     // Check if user is logged in when component mounts
     useEffect(() => {
-        // Check local storage for user data
-        const authUser = localStorage.getItem('organicMarketUser');
+        const hydrate = async () => {
+            const storedUser = localStorage.getItem('organicMarketUser');
+            if (storedUser) {
+                setCurrentUser(JSON.parse(storedUser));
+            }
 
-        if (authUser) {
-            setCurrentUser(JSON.parse(authUser));
-        }
+            await checkAuth();
+            setLoading(false);
+        };
 
-        setLoading(false);
-    }, []);
+        hydrate();
+    }, [checkAuth]);
 
     // Login function
-    const handleLogin = (credentials) => {
-        login(credentials);
-
-        setCurrentUser(authUser);
-        localStorage.setItem('organicMarketUser', JSON.stringify(authUser));
-
-        return authUser;
+    const handleLogin = async (credentials) => {
+        const user = await login(credentials);
+        setCurrentUser(user);
+        localStorage.setItem('organicMarketUser', JSON.stringify(user));
+        return user;
     };
 
     // Register function
@@ -38,6 +39,7 @@ export const AuthProvider = ({ children }) => {
     // Logout function
     const handleLogout = () => {
         setCurrentUser(null);
+        logout();
         localStorage.removeItem('organicMarketUser');
     };
 

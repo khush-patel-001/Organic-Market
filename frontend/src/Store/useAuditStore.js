@@ -9,9 +9,9 @@ export const useAuditStore = create((set) => ({
 
   createAudit: async (id, data) => {
     try {
-      const response = await axiosInstance.post(`/create-audit/${id}`, data);
+      const response = await axiosInstance.post(`/audit/create-audit/${id}`, data);
       set((state) => ({
-        audits: [...state.audits, response.data]
+        audits: [...state.audits, response.data?.data?.audit]
       }));
       toast.success("Audit created successfully!");
     } catch (error) {
@@ -22,8 +22,8 @@ export const useAuditStore = create((set) => ({
 
   getAuditById: async (id) => {
     try {
-      const response = await axiosInstance.get(`/get-audit-by-id/${id}`);
-      set({ audit: response.data});
+      const response = await axiosInstance.get(`/audit/get-audit-by-id/${id}`);
+      set({ audit: response.data?.data?.audit});
     } catch (error) {
       set({ error: error.response.data.message });
     }
@@ -32,9 +32,9 @@ export const useAuditStore = create((set) => ({
   getAuditByProductId: async (id) => {
     try {
       const response = await axiosInstance.get(
-        `/get-audit-by-product-id/${id}`
+        `/audit/get-audit-by-product-id/${id}`
       );
-      set({ audits: response.data});
+      set({ audits: response.data?.data?.audit});
     } catch (error) {
       set({error: error.response.data.message });
     }
@@ -42,10 +42,10 @@ export const useAuditStore = create((set) => ({
 
   updateAudit: async (id, data) => {
     try {
-      const response = await axiosInstance.put(`/update-audit/${id}`, data);
+      const response = await axiosInstance.put(`/audit/update-audit/${id}`, data);
       set((state) => ({
         audits: state.audits.map((audit) =>
-          audit._id === id ? response.data : audit
+          audit._id === id ? response.data?.data?.audit : audit
         )
       }));
       toast.success("Audit updated successfully!");
@@ -57,7 +57,7 @@ export const useAuditStore = create((set) => ({
 
   deleteAudit: async (id) => {
     try {
-      await axiosInstance.delete(`/delete-audit/${id}`);
+      await axiosInstance.delete(`/audit/delete-audit/${id}`);
       set((state) => ({
         audits: state.audits.filter((audit) => audit._id !== id)
       }));

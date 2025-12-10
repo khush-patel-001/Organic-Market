@@ -25,7 +25,7 @@ const getCurrentUser = asyncHandler(async (req, res) => {
     throw new ApiError(400, "User not found.");
   }
 
-  return res.status(200).json(new ApiResponse(200, "User found.", { user }));
+  return res.status(200).json(new ApiResponse(200, { user }, "User found."));
 });
 
 const updateAccountDetails = asyncHandler(async (req, res) => {
@@ -68,7 +68,9 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, user, "Account details updated successfully"));
+    .json(
+      new ApiResponse(200, { user }, "Account details updated successfully")
+    );
 });
 
 const updateProfileImage = asyncHandler(async (req, res) => {
@@ -96,7 +98,9 @@ const updateProfileImage = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, user, "Profile image updated successfully"));
+    .json(
+      new ApiResponse(200, { user }, "Profile image updated successfully")
+    );
 });
 
 const updateCoverImage = asyncHandler(async (req, res) => {
@@ -124,7 +128,7 @@ const updateCoverImage = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, user, "Cover image updated successfully"));
+    .json(new ApiResponse(200, { user }, "Cover image updated successfully"));
 });
 
 const updatePassword = asyncHandler(async (req, res) => {
@@ -140,7 +144,7 @@ const updatePassword = asyncHandler(async (req, res) => {
     throw new ApiError(400, "User not found.");
   }
 
-  const isMatch = await compare(currentPassword, user.password).then(
+  await compare(currentPassword, user.password).then(
     (isMatch) => {
       if (!isMatch) {
         throw new ApiError(400, "Current password is incorrect.");
@@ -151,12 +155,14 @@ const updatePassword = asyncHandler(async (req, res) => {
   user.password = newPassword;
   await user.save();
 
+  const safeUser = await User.findById(user._id).select("-password");
+
   return res
     .status(200)
     .json(
       new ApiResponse(
         200,
-        user.select("-password"),
+        { user: safeUser },
         "Password updated successfully"
       )
     );

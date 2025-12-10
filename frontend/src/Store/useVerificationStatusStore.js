@@ -11,7 +11,7 @@ export const useVerificationStatusStore = create((set) => ({
       const response = await axiosInstance.post("/verificationStatus/create-verification-status", {
         farmerId,
       });
-      set({ verificationStatus: response.data});
+      set({ verificationStatus: response.data?.data?.verificationStatus});
       toast.success("Verification Status created successfully.");
     } catch (error) {
       set({ error: error.response.data});
@@ -24,7 +24,7 @@ export const useVerificationStatusStore = create((set) => ({
       const response = await axiosInstance.get(
         `/verificationStatus/get-verification-status-by-id/${id}`
       );
-      set({ verificationStatus: response.data});
+      set({ verificationStatus: response.data?.data?.verificationStatus});
     } catch (error) {
       set({ error: error.response.data});
       toast.error(error.response.data.message);
@@ -37,7 +37,7 @@ export const useVerificationStatusStore = create((set) => ({
         `/verificationStatus/update-verification-status/${id}`,
         { status }
       );
-      set({ verificationStatus: response.data});
+      set({ verificationStatus: response.data?.data?.verificationStatus});
       toast.success("Verification Status updated successfully.");
     } catch (error) {
       set({ error: error.response.data});
@@ -50,7 +50,7 @@ export const useVerificationStatusStore = create((set) => ({
       const response = await axiosInstance.delete(
         `/verificationStatus/delete-verification-status/${id}`
       );
-      set({ verificationStatus: response.data});
+      set({ verificationStatus: response.data?.data?.verificationStatus});
       toast.success("Verification Status deleted successfully.");
     } catch (error) {
       set({ error: error.response.data});

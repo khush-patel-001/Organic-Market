@@ -37,7 +37,11 @@ const createCertification = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(
-      new ApiResponse(200, "Certification created successfully.", certification)
+      new ApiResponse(
+        200,
+        { certification },
+        "Certification created successfully."
+      )
     );
 });
 
@@ -56,7 +60,7 @@ const getAllCertifications = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, "Certifications found.", { certifications }));
+    .json(new ApiResponse(200, { certifications }, "Certifications found."));
 });
 
 const getCertificationById = asyncHandler(async (req, res) => {
@@ -74,7 +78,7 @@ const getCertificationById = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, "Certification found.", { certification }));
+    .json(new ApiResponse(200, { certification }, "Certification found."));
 });
 
 const updateCertification = asyncHandler(async (req, res) => {
@@ -112,9 +116,13 @@ const updateCertification = asyncHandler(async (req, res) => {
   }
 
   return res.status(200).json(
-    new ApiResponse(200, "Certification updated successfully.", {
-      certification,
-    })
+    new ApiResponse(
+      200,
+      {
+        certification,
+      },
+      "Certification updated successfully."
+    )
   );
 });
 
@@ -133,7 +141,7 @@ const deleteCertification = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, "Certification deleted successfully."));
+    .json(new ApiResponse(200, { certification }, "Certification deleted successfully."));
 });
 
 export {

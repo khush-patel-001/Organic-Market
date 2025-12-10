@@ -8,8 +8,8 @@ export const useUserStore = create((set) => ({
   user : async () => {
     try {
       const response = await axiosInstance.get("/user/current-user");
-      set({ currUser: response.data.message.user });
-      return response.data.message.user;
+      set({ currUser: response.data.data.user });
+      return response.data.data.user;
     } catch (error) {
       console.error("Error fetching user profile:", error);
       toast.error("Failed to fetch user profile.");
@@ -23,8 +23,8 @@ export const useUserStore = create((set) => ({
         data
       );
       console.log("response: ", response);  
-      set({ currUser: response.data.data });
-      return response.data.data;
+      set({ currUser: response.data.data.user });
+      return response.data.data.user;
     } catch (error) {
       toast.error(error.response.data.message);
       console.log("error: ", error);
@@ -42,7 +42,7 @@ export const useUserStore = create((set) => ({
           },
         }
       );
-      set({ currUser: response.data.message.user });
+      set({ currUser: response.data.data.user });
       toast.success("Profile image updated successfully!");
     } catch (error) {
       toast.error(error.response.data.message);
@@ -61,7 +61,7 @@ export const useUserStore = create((set) => ({
           },
         }
       );
-      const updatedUser = response.data.message.user;
+      const updatedUser = response.data.data.user;
       set({ currUser: updatedUser });
       return updatedUser;
     } catch (error) {
@@ -73,7 +73,7 @@ export const useUserStore = create((set) => ({
   updatePassword: async (data) => {
     try {
       const response = await axiosInstance.put("/user/update-password", data);
-      set({ currUser: response.data.message.user });
+      set({ currUser: response.data.data.user });
       toast.success("Password updated successfully!");
     } catch (error) {
       toast.error(error.response.data.message);

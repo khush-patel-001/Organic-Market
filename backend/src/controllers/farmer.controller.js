@@ -17,7 +17,7 @@ const getAllFarmers = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, "Farmers found.", { farmers }));
+    .json(new ApiResponse(200, { farmers }, "Farmers found."));
 });
 
 const getFarmerById = asyncHandler(async (req, res) => {
@@ -35,7 +35,23 @@ const getFarmerById = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, "Farmer found.", { farmer }));
+    .json(new ApiResponse(200, { farmer }, "Farmer found."));
+});
+
+const getCurrentFarmer = asyncHandler(async (req, res) => {
+  if (!req.farmer?._id) {
+    throw new ApiError(401, "Unauthorized! farmer not found");
+  }
+
+  const farmer = await Farmer.findById(req.farmer._id).select("-password");
+
+  if (!farmer) {
+    throw new ApiError(400, "Farmer not found.");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, { farmer }, "Farmer found."));
 });
 
 const updateFarmerAccountDetails = asyncHandler(async (req, res) => {
@@ -92,7 +108,9 @@ const updateFarmerAccountDetails = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, user, "Account details updated successfully"));
+    .json(
+      new ApiResponse(200, { farmer: user }, "Account details updated successfully")
+    );
 });
 
 const updateFarmerProfileImage = asyncHandler(async (req, res) => {
@@ -120,7 +138,7 @@ const updateFarmerProfileImage = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, farmer, "Avatar image updated successfully"));
+    .json(new ApiResponse(200, { farmer }, "Avatar image updated successfully"));
 });
 
 const updateFarmerCoverImage = asyncHandler(async (req, res) => {
@@ -148,7 +166,7 @@ const updateFarmerCoverImage = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, farmer, "Cover image updated successfully"));
+    .json(new ApiResponse(200, { farmer }, "Cover image updated successfully"));
 });
 
 const updateFarmerPassword = asyncHandler(async (req, res) => {
@@ -177,12 +195,13 @@ const updateFarmerPassword = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, farmer, "Password updated successfully"));
+    .json(new ApiResponse(200, { farmer }, "Password updated successfully"));
 });
 
 export {
   getAllFarmers,
   getFarmerById,
+  getCurrentFarmer,
   updateFarmerAccountDetails,
   updateFarmerProfileImage,
   updateFarmerCoverImage,

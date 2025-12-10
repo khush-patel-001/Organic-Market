@@ -136,18 +136,26 @@ const login = asyncHandler(async (req, res) => {
       user ? user._id : farmer._id
     ).select("-password -token");
 
-    return res
-      .status(200)
-      .json(new ApiResponse(200, createdUser, "User logged in Successfully"));
+    return res.status(200).json(
+      new ApiResponse(
+        200,
+        { user: createdUser, token },
+        "User logged in Successfully"
+      )
+    );
   }
 
   const createdFarmer = await Farmer.findById(
     user ? user._id : farmer._id
   ).select("-password -token");
 
-  return res
-    .status(200)
-    .json(new ApiResponse(200, createdFarmer, "User logged in Successfully"));
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      { user: createdFarmer, token },
+      "User logged in Successfully"
+    )
+  );
 });
 
 const logout = asyncHandler(async (req, res) => {
@@ -172,11 +180,14 @@ const logout = asyncHandler(async (req, res) => {
     await farmer.save();
   }
 
-  res.clearCookie("token", {
+  const cookieOptions = {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === "production",
     sameSite: "none",
-  });
+  };
+
+  res.clearCookie("token", cookieOptions);
+  res.clearCookie("jwt", cookieOptions);
 
   return res
     .status(200)

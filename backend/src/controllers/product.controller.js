@@ -71,7 +71,7 @@ const createProduct = asyncHandler(async (req, res) => {
 
   return res
     .status(201)
-    .json(new ApiResponse(201, "Product successfully created.", { product }));
+    .json(new ApiResponse(201, { product }, "Product successfully created."));
 });
 
 const getAllProducts = asyncHandler(async (req, res) => {
@@ -85,7 +85,7 @@ const getAllProducts = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, "Products found.", { products }));
+    .json(new ApiResponse(200, { products }, "Products found."));
 });
 
 const getAllProductsByFarmerId = asyncHandler(async (req, res) => {
@@ -105,7 +105,7 @@ const getAllProductsByFarmerId = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, "Products found.", { products }));
+    .json(new ApiResponse(200, { products }, "Products found."));
 });
 
 const getProductByProductId = asyncHandler(async (req, res) => {
@@ -123,7 +123,7 @@ const getProductByProductId = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, "Product found.", { product }));
+    .json(new ApiResponse(200, { product }, "Product found."));
 });
 
 const updateProduct = asyncHandler(async (req, res) => {
@@ -200,7 +200,7 @@ const updateProduct = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, "Product successfully updated", { product }));
+    .json(new ApiResponse(200, { product }, "Product successfully updated"));
 });
 
 const deleteProduct = asyncHandler(async (req, res) => {
@@ -218,7 +218,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, "Product Deleted successfully.", { product }));
+    .json(new ApiResponse(200, { product }, "Product Deleted successfully."));
 });
 
 export {

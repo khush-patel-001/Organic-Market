@@ -19,9 +19,13 @@ const createVerificationStatus = asyncHandler(async (req, res) => {
   }
 
   return res.status(200).json(
-    new ApiResponse(200, "Verification Status created successfully.", {
-      verificationStatus,
-    })
+    new ApiResponse(
+      200,
+      {
+        verificationStatus,
+      },
+      "Verification Status created successfully."
+    )
   );
 });
 
@@ -40,9 +44,7 @@ const getVerificationStatusById = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(
-      new ApiResponse(200, "Verification Status found.", { verificationStatus })
-    );
+    .json(new ApiResponse(200, { verificationStatus }, "Verification Status found."));
 });
 
 const updateVerificationStatus = asyncHandler(async (req, res) => {
@@ -73,9 +75,13 @@ const updateVerificationStatus = asyncHandler(async (req, res) => {
   }
 
   return res.status(200).json(
-    new ApiResponse(200, "Verification Status updated successfully.", {
-      verificationStatus,
-    })
+    new ApiResponse(
+      200,
+      {
+        verificationStatus,
+      },
+      "Verification Status updated successfully."
+    )
   );
 });
 
@@ -93,9 +99,13 @@ const deleteVerificationStatus = asyncHandler(async (req, res) => {
   }
 
   return res.status(200).json(
-    new ApiResponse(200, "verificationStatus deleted successfully.", {
-      verificationStatus,
-    })
+    new ApiResponse(
+      200,
+      {
+        verificationStatus,
+      },
+      "verificationStatus deleted successfully."
+    )
   );
 });
 

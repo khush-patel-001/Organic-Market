@@ -31,7 +31,7 @@ export const useProductStore = create((set) => ({
   getAllProducts: async () => {
     try {
       const response = await axiosInstance.get("/product/get-all-products");
-      const products = response.data.message?.products || [];
+      const products = response.data.data?.products || [];
       set({ products });
       return products;
     } catch (error) {
@@ -56,7 +56,7 @@ export const useProductStore = create((set) => ({
   getProductByProductId: async (id) => {
     try {
       const response = await axiosInstance.get(`/product/get-product-by-productId/${id}`);
-      return response.data.message.product;
+      return response.data.data.product;
     } catch (error) {
       console.error(`Error fetching product with ID ${id}:`, error);
       toast.error(error.response?.data?.message || "An unexpected error occurred.");

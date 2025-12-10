@@ -28,7 +28,7 @@ export const verifyToken = asyncHandler(async (req, res, next) => {
       return;
     }
 
-    if (user && !farmer) {
+    if (user) {
       req.user = user;
       next();
       return;
